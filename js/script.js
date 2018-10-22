@@ -8,6 +8,10 @@ projectiles[0].style.bottom = "75px";
 projectiles[0].style.left = "398px";
 projectiles[0].style.display = "none";
 
+/****************PLAY SOUNDS***************/
+document.getElementById('yourAudioTag').play();
+/******************************************/
+
 var monTimer;
 
 /*******************JOUER********************/
