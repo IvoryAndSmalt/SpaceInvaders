@@ -102,6 +102,15 @@ table {
     /* background-color: white; */
     position: absolute;
 }
+#missileAliens {
+    position: absolute;
+    display: block;
+    width: 4px;
+    height: 20px;
+    background: yellow;
+    /* bottom: 75px; */
+    /* left: 398px; */
+}
 
 h1{
     display: none,
