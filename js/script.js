@@ -61,24 +61,48 @@ projectiles[0].style.left = "400px";
 projectiles[0].style.display = "none";
 
 document.addEventListener('keydown', function (event) {
-    if (event.keyCode == "32" && hasFired == 0) {
-        hasFired = 1;
-        projectiles[0].style.left = parseFloat(vaisseau.style.left) + 23 + "px";
-        monTimer = setInterval(function () {
-            if (parseInt(projectiles[0].style.bottom) >= 500) {
-                hasFired = 0;
-                clearInterval(monTimer);
-                projectiles[0].style.bottom = 75 + "px";
-                projectiles[0].style.display = "none";
-                console.log("STOP");
+    let aliens = document.getElementsByClassName('aliens');
+    for (var i = 0; i < aliens.length; i++) {
+        var thisAlien = aliens[i];
+        console.log(aliens[i].style.display);
+        if (event.keyCode == "32" && hasFired == 0) {
+            hasFired = 1;
+            projectiles[0].style.left = parseFloat(vaisseau.style.left) + 23 + "px";
+            monTimer = setInterval(function () {
+
+
+                if (parseInt(projectiles[0].style.bottom) >= 500) {
+                    hasFired = 0;
+                    clearInterval(monTimer);
+                    projectiles[0].style.bottom = 75 + "px";
+                    projectiles[0].style.display = "none";
+                    console.log("STOP");
+                }
+                else {
+                    projectiles[0].style.display = "block";
+                    projectiles[0].style.bottom = parseFloat(projectiles[0].style.bottom) + 16 + "px";
+
+                    if (parseInt(projectiles[0].style.bottom) <= parseInt(aliens[i].style.bottom) && parseInt(projectiles[0].style.bottom) >= parseInt(aliens[i].style.bottom) - 20 +"px"
+                        && parseInt(projectiles[0].style.left) >= parseInt(aliens[i].style.left) && parseInt(projectiles[0].style.left) <= parseInt(aliens[i].style.left) + 20 +"px"){
+                        aliens[i].style.display = 'none';
+                    console.log("test");
+                }
+
             }
-            else {
-                projectiles[0].style.display = "block";
-                projectiles[0].style.bottom = parseFloat(projectiles[0].style.bottom) + 8 + "px";
-            }
-        }, 10);
-    }
-});
+          }, 40);
+
+
+        
+
+
+// function isCollide(a, b) {
+//     return !(
+//         ((a.y + a.height) < (b.y)) ||
+//         (a.y > (b.y + b.height)) ||
+//         ((a.x + a.width) < b.x) ||
+//         (a.x > (b.x + b.width))
+//     );
+// }
 
 /**********************ORGANISATION ALIENS*********************/
 
@@ -93,7 +117,7 @@ for (let i = 0; i < rows; i++) {
     for (let j = 0; j < columns; j++) {
         let aliens = document.createElement("div");
         aliens.className = 'aliens';
-        aliens.style.top = spaceWidth * i + "px";
+        aliens.style.bottom = - spaceWidth * i + "px";
         aliens.style.left = spaceWidth * j + "px";
         mechants.appendChild(aliens);
     }
@@ -140,5 +164,16 @@ moveAliensGauche = setInterval(function () {
 
 /*******************COLLISIONS****************/
 
-aliens.style.top ;
-aliens.style.left ;
+
+
+// for (let i = 0; i < rows; i++) {
+//     for (let j = 0; j < columns; j++) { 
+// let aliensp = document.getElementsByClassName('aliens');
+// if (projectiles[0].style.bottom <= aliensp.style.bottom && projectiles[0].style.bottom >= parseInt(aliensp.style.bottom) - 20 +"px"
+//  && projectiles[0].style.left >= aliensp.style.left && projectiles[0].style.left <= parseInt(aliensp.style.left) + 20 +"px"){
+
+// }
+// }
+// }
+
+
