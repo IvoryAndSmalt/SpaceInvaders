@@ -1,6 +1,7 @@
 var vaisseau = document.getElementById('vaisseau');
 var jouer = document.getElementById('jouer');
 var projectiles = document.getElementsByClassName('projectiles');
+var fenetre = document.getElementById('container');
 jouer.style.display = "block";
 vaisseau.style.left = "375px";
 vaisseau.style.display = "none"
@@ -118,6 +119,8 @@ projectiles[0].style.bottom = "75px";
 projectiles[0].style.left = "400px";
 projectiles[0].style.display = "none";
 let aliens = document.getElementsByClassName('aliens');
+var messageBravo = document.createElement("h1");
+let quelMinion = 
 
 document.addEventListener('keydown', function (event) {
 
@@ -125,8 +128,16 @@ document.addEventListener('keydown', function (event) {
         hasFired = 1;
         projectiles[0].style.left = parseFloat(vaisseau.style.left) + 23 + "px";
         monTimer = setInterval(function () {
+            if (aliens.length == 0) {
+                clearInterval(monTimer);
+                mechants.style.display = "none";
+                fenetre.appendChild(messageBravo);
+                messageBravo.innerHTML = "Bravo, vous avez gagné !";
+                messageBravo.id = "bravomessage"
+                //ajout audio victoire
+            }
 
-            if (parseInt(projectiles[0].style.bottom) >= 500) {
+            else if (parseInt(projectiles[0].style.bottom) >= 500) {
                 hasFired = 0;
                 clearInterval(monTimer);
                 projectiles[0].style.bottom = 75 + "px";
@@ -134,19 +145,17 @@ document.addEventListener('keydown', function (event) {
             }
             else {
                 projectiles[0].style.display = "block";
-                projectiles[0].style.bottom = parseFloat(projectiles[0].style.bottom) + 10 + "px";
+                projectiles[0].style.bottom = parseFloat(projectiles[0].style.bottom) + 16 + "px";
                 for (var i = 0; i < aliens.length; i++) {
                     var thisAlien = aliens[i];
                     var realAlienBottom = parseInt(thisAlien.style.bottom) + parseInt(mechants.style.bottom);
                     var realAlienLeft = parseInt(thisAlien.style.left) + parseInt(mechants.style.left);
                     if (parseInt(projectiles[0].style.bottom) <= realAlienBottom && parseInt(projectiles[0].style.bottom) >= realAlienBottom - 30) {
-                        // si vrai, test left
                         if (parseInt(projectiles[0].style.left) >= realAlienLeft && parseInt(projectiles[0].style.left) <= realAlienLeft + 30) {
-                            // thisAlien.style.display = 'none';
                             mechants.removeChild(thisAlien);
                             console.log(aliens.length);
                             projectiles[0].style.display = "none";
-                            clearInterval(monTimer);
+                            // clearInterval(monTimer);
                         }
                         else { };
                     }
@@ -156,12 +165,5 @@ document.addEventListener('keydown', function (event) {
     }
 });
 
-/********************QUAND ON GAGNE***************/
-
-if (aliens.length == 0){
-    jouer.style.display = "none";
-    vaisseau.style.display = "none";
-    mechants.style.display = "none";
-}
 
 

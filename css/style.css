@@ -47,14 +47,14 @@ table {
 	border-spacing: 0;
 }
 
-.container {
+#container {
     position: relative;
     margin: 0 auto;
     margin-top: 5%;
     width: 800px;
     height: 550px;
     border: solid 3px blue;
-    background: black;
+    background: lightgrey;
 }
 
 #jouer {
@@ -71,7 +71,8 @@ table {
     width: 50px;
     height: 50px;
     bottom: 20px;
-    background: red;
+    background: url(../images/minionsgentils.svg);
+    background-size: 100%;
     /* left: 375px; */
 
 }
@@ -79,7 +80,7 @@ table {
 .projectiles {
     position: absolute;
     display: block;
-    width: 4px;
+    width: 8px;
     height: 20px;
     background: yellow;
     /* bottom: 75px; */
@@ -93,9 +94,23 @@ table {
 }
 
 .aliens{
-    height:30px;
-    width:30px;
-    background: url(zofkzefkozfk.png);
+    height:40px;
+    width:40px;
+    background: url(../images/minionmechant.svg);
+    background-size: 100%;
+    /* background-color: white; */
     position: absolute;
 }
 
+h1{
+    display: none,
+}
+
+#bravomessage{
+    display: block;
+    margin: 200px 0;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 50px;
+    color: green;
+}
