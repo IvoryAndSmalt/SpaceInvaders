@@ -16,6 +16,7 @@ var monTimer;
 
 /*******************JOUER********************/
 jouer.addEventListener("click", function () {
+    tirAliens();
     jouer.style.display = "none";
     mechants.style.left = "76px";
     mechants.style.bottom = "475px";
@@ -129,7 +130,7 @@ moveAliensGauche = setInterval(function () {
             mechants.style.left = parseFloat(mechants.style.left) - 15 + "px";
         }
     }
-    else{
+    else {
         vaisseau.style.display = "none";
         projectiles[0].style.display = "none";
         mechants.style.display = "none";
@@ -138,7 +139,76 @@ moveAliensGauche = setInterval(function () {
     }
 }, 750);
 
-/*******************COLLISIONS****************/
+// où le missile arrive en px ( milieu aliens+marges)
 
-aliens.style.top ;
-aliens.style.left ;
+var missileAliensLeft;
+
+var missileAliens = document.getElementById("missileAliens");
+missileAliens.style.display = "none";
+var delaiMissileAliens = Math.floor(Math.random() * (5000 - 2000 + 1)) + 2000;
+var monTimerMissile;
+
+function tirAliens() {  
+    monTimerMissileAliens = setInterval(function () {
+
+        function entierAleatoire(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        //résultat de l'entier = var entier
+        var entier = entierAleatoire(0, 9);
+        var multiple = 45;
+
+        //générer un aléatoire entre 1 et 10
+
+        missileAliensLeft = entier * multiple + parseInt(mechants.style.left) + 15 + "px";
+        console.log(missileAliensLeft);
+
+        missileAliens.style.bottom = "210px";
+        missileAliens.style.left = missileAliensLeft;
+        console.log(missileAliens.style.left);
+        missileAliens.style.display = "none";
+
+        let vitesseMissileAliens = setInterval(function () {
+            if (parseInt(missileAliens.style.bottom) <= 20) {
+                clearInterval(vitesseMissileAliens);
+                missileAliens.style.display = "none";
+                console.log("STOP");
+
+            }
+            else {
+                missileAliens.style.display = "block";
+                missileAliens.style.bottom = parseFloat(missileAliens.style.bottom) - 12 + "px";
+            }
+        }, 100);
+
+    }, 2500);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
