@@ -9,7 +9,7 @@ projectiles[0].style.left = "398px";
 projectiles[0].style.display = "none";
 
 /****************PLAY SOUNDS***************/
-document.getElementById('yourAudioTag').play();
+// document.getElementById('yourAudioTag').play();
 /******************************************/
 
 var monTimer;
@@ -102,14 +102,13 @@ for (let i = 0; i < rows; i++) {
 /**************************ALIENS BOUGENT************************/
 
 var moveAliensGauche;
-var moveAliensDroite;
 mechants.style.left = "80px";
 mechants.style.bottom = "475px";
 var switchGauche = 1;
 var switchDroite = 0;
 
 moveAliensGauche = setInterval(function () {
-    if (switchGauche == 1 && switchDroite == 0 ) {
+    if (switchGauche == 1 && switchDroite == 0) {
         console.log(mechants.style.bottom);
         if (parseFloat(mechants.style.left) >= 300) {
             mechants.style.bottom = parseFloat(mechants.style.bottom) - 10 + "px";
@@ -139,3 +138,7 @@ moveAliensGauche = setInterval(function () {
     }
 }, 750);
 
+/*******************COLLISIONS****************/
+
+aliens.style.top ;
+aliens.style.left ;
