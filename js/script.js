@@ -83,37 +83,31 @@ var switchDroite = 0;
 
 function lesAliensBougent() {
     moveAliensGauche = setInterval(function () {
-        for (var i = 0; i < aliens.length; i++) {
-            var thisAlien = aliens[i];
-            var realAlienBottom = parseInt(thisAlien.style.bottom) + parseInt(mechants.style.bottom);
-            if (parseInt(realAlienBottom) < 66) {
-                vaisseau.style.display = "none";
-                projectiles[0].style.display = "none";
-                mechants.style.display = "none";
-                clearInterval(moveAliensGauche);
+        if (switchGauche == 1 && switchDroite == 0) {
+            if (parseFloat(mechants.style.left) >= 300) {
+                mechants.style.bottom = parseFloat(mechants.style.bottom) - 10 + "px";
+                switchDroite = 1
+                switchGauche = 0
             }
             else {
-                if (switchGauche == 1 && switchDroite == 0) {
-                    if (parseFloat(mechants.style.left) >= 300) {
-                        mechants.style.bottom = parseFloat(mechants.style.bottom) - 10 + "px";
-                        switchDroite = 1
-                        switchGauche = 0
-                    }
-                    else {
-                        mechants.style.left = parseFloat(mechants.style.left) + 15 + "px";
-                    }
-                }
-                else if (switchGauche == 0 && switchDroite == 1) {
-                    if (parseFloat(mechants.style.left) <= 75) {
-                        mechants.style.bottom = parseFloat(mechants.style.bottom) - 10 + "px";
-                        switchDroite = 0
-                        switchGauche = 1
-                    }
-                    else {
-                        mechants.style.left = parseFloat(mechants.style.left) - 15 + "px";
-                    }
-                }
+                mechants.style.left = parseFloat(mechants.style.left) + 15 + "px";
             }
+        }
+        else if (switchGauche == 0 && switchDroite == 1) {
+            if (parseFloat(mechants.style.left) <= 75) {
+                mechants.style.bottom = parseFloat(mechants.style.bottom) - 10 + "px";
+                switchDroite = 0
+                switchGauche = 1
+            }
+            else {
+                mechants.style.left = parseFloat(mechants.style.left) - 15 + "px";
+            }
+        }
+        else {
+            vaisseau.style.display = "none";
+            projectiles[0].style.display = "none";
+            mechants.style.display = "none";
+            clearInterval();
         }
     }, 750);
 }
@@ -122,19 +116,18 @@ function lesAliensBougent() {
 
 var hasFired;
 hasFired = 0;
-projectiles[0].style.bottom = "50px";
+projectiles[0].style.bottom = "75px";
 projectiles[0].style.left = "400px";
 projectiles[0].style.display = "none";
 let aliens = document.getElementsByClassName('aliens');
 var messageBravo = document.createElement("h1");
-let quelMinion;
+let quelMinion = 
 
 document.addEventListener('keydown', function (event) {
 
     if (event.keyCode == "32" && hasFired == 0) {
-        quelMinion = Math.random() < 0.5 ? 8 : 35;
         hasFired = 1;
-        projectiles[0].style.left = parseInt(vaisseau.style.left) + quelMinion + "px";
+        projectiles[0].style.left = parseFloat(vaisseau.style.left) + 23 + "px";
         monTimer = setInterval(function () {
             if (aliens.length == 0) {
                 clearInterval(monTimer);
@@ -148,13 +141,12 @@ document.addEventListener('keydown', function (event) {
             else if (parseInt(projectiles[0].style.bottom) >= 500) {
                 hasFired = 0;
                 clearInterval(monTimer);
-                projectiles[0].style.bottom = 50 + "px";
+                projectiles[0].style.bottom = 75 + "px";
                 projectiles[0].style.display = "none";
             }
             else {
                 projectiles[0].style.display = "block";
                 projectiles[0].style.bottom = parseFloat(projectiles[0].style.bottom) + 16 + "px";
-                console.log(projectiles[0].style.bottom);
                 for (var i = 0; i < aliens.length; i++) {
                     var thisAlien = aliens[i];
                     var realAlienBottom = parseInt(thisAlien.style.bottom) + parseInt(mechants.style.bottom);

@@ -82,8 +82,7 @@ table {
     display: block;
     width: 8px;
     height: 20px;
-    background: url(../images/banane.svg);
-    background-size: 100%;
+    background: yellow;
     /* bottom: 75px; */
     /* left: 398px; */
 }
