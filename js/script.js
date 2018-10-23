@@ -8,12 +8,22 @@ vaisseau.style.display = "none"
 projectiles[0].style.bottom = "75px";
 projectiles[0].style.left = "398px";
 projectiles[0].style.display = "none";
-
-/****************CECI ESt UN SECRET***************/
-// document.getElementById('yourAudioTag').play();
-/*************************************************/
-
+var alienMoveSpeed = 200;
+var alienJump = 50;
 var monTimer;
+var messageBravo = document.createElement("h1");
+var perdu = document.createElement("h1");
+
+/****************FONCTION JOUER DES SONS***************/
+function playSound(audio) {
+    var myAudio = document.createElement("audio");
+    fenetre.appendChild(myAudio);
+    myAudio.src = "sounds/" + audio;
+    myAudio.id = "myAudio";
+    myAudio = document.getElementById("myAudio");
+    myAudio.loop = false;
+    myAudio.play();
+}
 
 /*******************JOUER********************/
 jouer.addEventListener("click", function () {
@@ -33,7 +43,6 @@ function moveLeft() {
         vaisseau.style.left = parseFloat(vaisseau.style.left) - 10 + "px";
     }
 }
-
 document.addEventListener('keydown', function (event) {
     if (event.keyCode == "37") {
         moveLeft();
@@ -85,7 +94,7 @@ function lesAliensBougent() {
     moveAliensGauche = setInterval(function () {
         if (switchGauche == 1 && switchDroite == 0) {
             if (parseFloat(mechants.style.left) >= 300) {
-                mechants.style.bottom = parseFloat(mechants.style.bottom) - 10 + "px";
+                mechants.style.bottom = parseFloat(mechants.style.bottom) - 30 + "px";
                 switchDroite = 1
                 switchGauche = 0
             }
@@ -95,7 +104,7 @@ function lesAliensBougent() {
         }
         else if (switchGauche == 0 && switchDroite == 1) {
             if (parseFloat(mechants.style.left) <= 75) {
-                mechants.style.bottom = parseFloat(mechants.style.bottom) - 10 + "px";
+                mechants.style.bottom = parseFloat(mechants.style.bottom) - 30 + "px";
                 switchDroite = 0
                 switchGauche = 1
             }
@@ -103,13 +112,7 @@ function lesAliensBougent() {
                 mechants.style.left = parseFloat(mechants.style.left) - 15 + "px";
             }
         }
-        else {
-            vaisseau.style.display = "none";
-            projectiles[0].style.display = "none";
-            mechants.style.display = "none";
-            clearInterval();
-        }
-    }, 750);
+    }, alienMoveSpeed);
 }
 
 /********************TIRE***********************/
@@ -120,14 +123,14 @@ projectiles[0].style.bottom = "75px";
 projectiles[0].style.left = "400px";
 projectiles[0].style.display = "none";
 let aliens = document.getElementsByClassName('aliens');
-var messageBravo = document.createElement("h1");
-let quelMinion = 
+let quelMinion;
 
 document.addEventListener('keydown', function (event) {
 
     if (event.keyCode == "32" && hasFired == 0) {
+        quelMinion = Math.random() < 0.5 ? 5 : 32;
         hasFired = 1;
-        projectiles[0].style.left = parseFloat(vaisseau.style.left) + 23 + "px";
+        projectiles[0].style.left = parseFloat(vaisseau.style.left) + quelMinion + "px";
         monTimer = setInterval(function () {
             if (aliens.length == 0) {
                 clearInterval(monTimer);
@@ -141,7 +144,7 @@ document.addEventListener('keydown', function (event) {
             else if (parseInt(projectiles[0].style.bottom) >= 500) {
                 hasFired = 0;
                 clearInterval(monTimer);
-                projectiles[0].style.bottom = 75 + "px";
+                projectiles[0].style.bottom = 66 + "px";
                 projectiles[0].style.display = "none";
             }
             else {
@@ -154,35 +157,25 @@ document.addEventListener('keydown', function (event) {
                     if (parseInt(projectiles[0].style.bottom) <= realAlienBottom && parseInt(projectiles[0].style.bottom) >= realAlienBottom - 30) {
                         if (parseInt(projectiles[0].style.left) >= realAlienLeft && parseInt(projectiles[0].style.left) <= realAlienLeft + 30) {
                             mechants.removeChild(thisAlien);
-                            console.log(aliens.length);
                             projectiles[0].style.display = "none";
                             // clearInterval(monTimer);
                         }
-                        else { };
                     }
                 }
             }
         }, 40);
     }
-    else {
-        vaisseau.style.display = "none";
-        projectiles[0].style.display = "none";
-        mechants.style.display = "none";
-        clearInterval();
-        console.log(mechants.style.bottom);
-    }
-}, 750);
+});
 
-// où le missile arrive en px ( milieu aliens+marges)
+/**********************ALIENS TIRENT*****************/
 
 var missileAliensLeft;
-
 var missileAliens = document.getElementById("missileAliens");
 missileAliens.style.display = "none";
 var delaiMissileAliens = Math.floor(Math.random() * (5000 - 2000 + 1)) + 2000;
 var monTimerMissile;
 
-function tirAliens() {  
+function tirAliens() {
     monTimerMissileAliens = setInterval(function () {
 
         function entierAleatoire(min, max) {
@@ -195,19 +188,14 @@ function tirAliens() {
         //générer un aléatoire entre 1 et 10
 
         missileAliensLeft = entier * multiple + parseInt(mechants.style.left) + 15 + "px";
-        console.log(missileAliensLeft);
-
         missileAliens.style.bottom = "210px";
         missileAliens.style.left = missileAliensLeft;
-        console.log(missileAliens.style.left);
         missileAliens.style.display = "none";
 
         let vitesseMissileAliens = setInterval(function () {
             if (parseInt(missileAliens.style.bottom) <= 20) {
                 clearInterval(vitesseMissileAliens);
                 missileAliens.style.display = "none";
-                console.log("STOP");
-
             }
             else {
                 missileAliens.style.display = "block";
@@ -216,8 +204,36 @@ function tirAliens() {
         }, 100);
 
     }, 2500);
-
 }
+
+/*******************PERDRE********************/
+var hasLost = 0;
+function perdre() {
+    for (var i = 0; i < aliens.length; i++) {
+        var thisAlien = aliens[i];
+        var realAlienBottom = parseInt(thisAlien.style.bottom) + parseInt(mechants.style.bottom);
+        if (realAlienBottom <= 75) {
+            hasLost = 1;
+        }
+    }
+}
+
+var interLost = setInterval(function () {
+    perdre();
+    if (hasLost == 1) {
+        vaisseau.style.display = "none";
+        projectiles[0].style.display = "none";
+        mechants.style.display = "none";
+        fenetre.appendChild(perdu);
+        perdu.innerHTML = "(thisAlien.style.bottom == 0) is true ; YOU HAVE LOST.";
+        perdu.id = "perdu"
+        playSound("bottom.ogg");
+        clearInterval(interLost);
+        clearInterval(monTimerMissileAliens);
+    }
+}, alienMoveSpeed);
+
+
 
 
 

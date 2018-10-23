@@ -112,14 +112,18 @@ table {
 }
 
 h1{
-    display: none,
-}
-
-#bravomessage{
     display: block;
     margin: 200px 0;
     text-align: center;
     text-transform: uppercase;
     font-size: 50px;
+}
+
+#bravomessage{
     color: green;
+}
+
+#perdu{
+    text-transform: initial;
+    color: red;
 }
