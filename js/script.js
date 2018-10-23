@@ -172,7 +172,6 @@ document.addEventListener('keydown', function (event) {
             }
         }, 40);
     }
-<<<<<<< HEAD
     else {
         vaisseau.style.display = "none";
         projectiles[0].style.display = "none";
@@ -254,9 +253,4 @@ function tirAliens() {
 
 
 
-=======
-});
-
-
->>>>>>> 4b836d5c4fa33215ff182bd9cbebb8f011b51725
 
