@@ -54,7 +54,7 @@ table {
     width: 800px;
     height: 550px;
     border: solid 3px blue;
-    background: lightgrey;
+    background: url(../images/minionaccueil.jpg);
 }
 
 #jouer {
