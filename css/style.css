@@ -47,7 +47,7 @@ table {
 	border-spacing: 0;
 }
 
-/*font-family: 'Press Start 2P', cursive;*/
+
 
 #container {
     position: relative;
@@ -60,6 +60,7 @@ table {
 }
 
 #jouer {
+    font-family: 'Press Start 2P', cursive;
     position: absolute;
     display: block;
     width: 100px;
