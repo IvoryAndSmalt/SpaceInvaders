@@ -18,26 +18,6 @@ projectiles[0].style.bottom = "75px";
 projectiles[0].style.left = "398px";
 projectiles[0].style.display = "none";
 
-/************************GENERATION OBSTACLES**********/
-
-var nombreObst = 4;
-var nombreHaut = 4;
-var margeHaut = 10;
-var valeurObst = 140;
-
-for (let i = 0; i < nombreObst; i++) {
-
-    for (let j = 0; j < nombreHaut; j++) {
-
-        let carresHaut = document.createElement("div");
-        carresHaut.className = 'carresHaut carres';
-        carresHaut.style.left = margeHaut * j + i * valeurObst + "px";
-        fenetre.appendChild(carresHaut);
-
-    }
-}
-
-
 /****************FONCTION JOUER DES SONS***************/
 function playSound(audio) {
     var myAudio = document.createElement("audio");
@@ -157,12 +137,7 @@ document.addEventListener('keydown', function (event) {
         projectiles[0].style.left = parseFloat(vaisseau.style.left) + quelMinion + "px";
         monTimer = setInterval(function () {
             if (aliens.length == 0) {
-                clearInterval(monTimer);
-                mechants.style.display = "none";
-                fenetre.appendChild(messageBravo);
-                messageBravo.innerHTML = "Bravo, vous avez gagné !";
-                messageBravo.id = "bravomessage"
-                //ajout audio victoire
+                gagner();
             }
 
             else if (parseInt(projectiles[0].style.bottom) >= 500) {
@@ -174,11 +149,14 @@ document.addEventListener('keydown', function (event) {
             else {
                 projectiles[0].style.display = "block";
                 projectiles[0].style.bottom = parseFloat(projectiles[0].style.bottom) + 16 + "px";
+
+                if (parseInt(projectiles[0].style.bottom)) {
+                }
+                /***********COLLISION TIRS AVEC LES ALIENS *********************/
                 for (var i = 0; i < aliens.length; i++) {
                     var thisAlien = aliens[i];
                     var realAlienBottom = parseInt(thisAlien.style.bottom) + parseInt(mechants.style.bottom);
                     var realAlienLeft = parseInt(thisAlien.style.left) + parseInt(mechants.style.left);
-
                     if (parseInt(projectiles[0].style.bottom) <= realAlienBottom && parseInt(projectiles[0].style.bottom) >= realAlienBottom - 30) {
                         if (parseInt(projectiles[0].style.left) + 5 >= realAlienLeft && parseInt(projectiles[0].style.left) <= realAlienLeft + 25) {
                             mechants.removeChild(thisAlien);
@@ -261,9 +239,37 @@ function tirAliens() {
     }, 2500);
 }
 
+/************************GENERATION OBSTACLES**********/
 
+var nombreObst = 4;
+var nombreHaut = 4;
+var margeHaut = 10;
+var valeurObst = 140;
 
+for (let i = 0; i < nombreObst; i++) {
 
+    for (let j = 0; j < nombreHaut; j++) {
+
+        let carresHaut = document.createElement("div");
+        carresHaut.className = 'carresHaut carres';
+        carresHaut.style.left = margeHaut * j + i * valeurObst + "px";
+        fenetre.appendChild(carresHaut);
+
+    }
+}
+
+/**************************GAGNER**********************/
+
+function gagner() {
+    clearInterval(monTimer);
+    mechants.style.display = "none";
+    projectiles[0].style.display = "none";
+    clearInterval(monTimerMissileAliens);
+    fenetre.appendChild(messageBravo);
+    messageBravo.innerHTML = "Bravo, vous avez gagné !";
+    messageBravo.id = "bravomessage"
+    //ajout audio victoire
+}
 
 /*******************PERDRE********************/
 var hasLost = 0;
@@ -276,6 +282,8 @@ function perdre() {
         }
     }
 }
+
+/***************APPEL à chaque fois que les aliens bougent*************/
 
 var interLost = setInterval(function () {
     perdre();
@@ -293,14 +301,13 @@ var interLost = setInterval(function () {
 }, alienMoveSpeed);
 
 
+/*triche*/
 
-
-
-
-
-
-
-
+document.addEventListener("keydown", function (e) {
+    if (e.keyCode == "90") {
+        gagner();
+    }
+});
 
 
 
