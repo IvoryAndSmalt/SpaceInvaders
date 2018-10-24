@@ -82,7 +82,9 @@ table {
     display: block;
     width: 8px;
     height: 20px;
-    background: yellow;
+    background: url(../images/banane.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
     /* bottom: 75px; */
     /* left: 398px; */
 }
@@ -96,11 +98,13 @@ table {
 .aliens{
     height:40px;
     width:40px;
-    background: url(../images/minionmechant.svg);
-    background-size: 100%;
+    background: url(../images/aliens.png);
+    background-size: contain;
+    background-repeat: no-repeat;
     /* background-color: white; */
     position: absolute;
 }
+
 #missileAliens {
     position: absolute;
     display: block;
