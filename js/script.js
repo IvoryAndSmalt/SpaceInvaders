@@ -218,7 +218,6 @@ function tirAliens() {
                             clearInterval(vitesseMissileAliens)
                             document.getElementById("vie").innerHTML = "Vies : " + vie;
                         }
-
                         else {
                             vaisseau.style.display = "none";
                             missileAliens.style.display = "none";
@@ -226,17 +225,12 @@ function tirAliens() {
                             clearInterval(moveAliensGauche);
                             mechants.style.display = "none";
                             document.getElementById("vie").innerHTML = "Vies : " + vie;
-
                         }
-
-
-
                     }
                 }
             }
         }, 100);
-
-    }, 2500);
+    }, 3000);
 }
 
 /************************GENERATION OBSTACLES**********/
@@ -254,7 +248,6 @@ for (let i = 0; i < nombreObst; i++) {
         carresHaut.className = 'carresHaut carres';
         carresHaut.style.left = margeHaut * j + i * valeurObst + "px";
         fenetre.appendChild(carresHaut);
-
     }
 }
 
@@ -299,7 +292,6 @@ var interLost = setInterval(function () {
         clearInterval(monTimerMissileAliens);
     }
 }, alienMoveSpeed);
-
 
 /*triche*/
 
