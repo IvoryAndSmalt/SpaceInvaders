@@ -47,6 +47,8 @@ table {
 	border-spacing: 0;
 }
 
+/*font-family: 'Press Start 2P', cursive;*/
+
 #container {
     position: relative;
     margin: 0 auto;
@@ -110,7 +112,8 @@ table {
     display: block;
     width: 4px;
     height: 20px;
-    background: yellow;
+    background: #7454A2;
+    border-radius: 50%;
     /* bottom: 75px; */
     /* left: 398px; */
 }
