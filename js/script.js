@@ -14,6 +14,8 @@ var alienJump = 50;
 var monTimer;
 var messageBravo = document.createElement("h1");
 var perdu = document.createElement("h1");
+var score = 0;
+var vie = 3;
 
 /************************GENERATION OBSTACLES**********/
 
@@ -178,11 +180,18 @@ document.addEventListener('keydown', function (event) {
                     var thisAlien = aliens[i];
                     var realAlienBottom = parseInt(thisAlien.style.bottom) + parseInt(mechants.style.bottom);
                     var realAlienLeft = parseInt(thisAlien.style.left) + parseInt(mechants.style.left);
+                    
                     if (parseInt(projectiles[0].style.bottom) <= realAlienBottom && parseInt(projectiles[0].style.bottom) >= realAlienBottom - 30) {
                         if (parseInt(projectiles[0].style.left) >= realAlienLeft && parseInt(projectiles[0].style.left) <= realAlienLeft + 30) {
                             mechants.removeChild(thisAlien);
                             projectiles[0].style.display = "none";
                             // clearInterval(monTimer);
+
+                            score = score +100 ;
+                            document.getElementById("score").innerHTML = "Score : "+ score;
+
+
+                            
                         }
                     }
                 }
@@ -190,6 +199,9 @@ document.addEventListener('keydown', function (event) {
         }, 40);
     }
 });
+
+
+
 
 /**********************ALIENS TIRENT*****************/
 
@@ -230,21 +242,36 @@ function tirAliens() {
                 if (parseInt(missileAliens.style.bottom)-30 <= parseInt(vaisseau.style.bottom) && parseInt(missileAliens.style.bottom)-30 >= parseInt(vaisseau.style.bottom) - 50) {
                     if (parseInt(missileAliens.style.left) >= parseInt(vaisseau.style.left) && parseInt(missileAliens.style.left) <= parseInt(vaisseau.style.left) + 50) {
                     console.log("true");    
-                    vaisseau.style.display="none";
-                        missileAliens.style.display = "none";
-                        clearInterval(monTimerMissileAliens);
-                        clearInterval(moveAliensGauche);
-                        mechants.style.display="none";
+                   
                         // AFFICHER UN MESSAAAAAAGE
-                     
+                        if (vie>0){
+                         vie = vie -1 ;
+                         missileAliens.style.display = "none";
+                         clearInterval(vitesseMissileAliens)
+                         document.getElementById("vie").innerHTML ="Vies : " + vie ;
+                        }
+
+                         else{
+                            vaisseau.style.display="none";
+                            missileAliens.style.display = "none";
+                            clearInterval(monTimerMissileAliens);
+                            clearInterval(moveAliensGauche);
+                            mechants.style.display="none";
+                            console.log(vie);
+                            document.getElementById("vie").innerHTML ="Vies : " + vie ;
+
+                        }
+                        
+                        
                         
                     }
                 }
             }
         }, 100);
-
+        
     }, 2500);
 }
+
 
 
 
