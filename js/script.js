@@ -22,14 +22,59 @@ projectiles[0].style.left = "398px";
 projectiles[0].style.display = "none";
 
 /****************FONCTION JOUER DES SONS***************/
-function playSound(audio) {
-    var myAudio = document.createElement("audio");
-    fenetre.appendChild(myAudio);
-    myAudio.src = "sounds/" + audio;
-    myAudio.id = "myAudio";
-    myAudio = document.getElementById("myAudio");
-    myAudio.loop = false;
-    myAudio.play();
+function playpou() {
+    var pou = document.createElement("audio");
+    fenetre.appendChild(pou);
+    pou.src = "sounds/pou.ogg";
+    pou.id = "pou";
+    pou = document.getElementById("pou");
+    pou.loop = false;
+    pou.play();
+}
+function playbla() {
+    var bla = document.createElement("audio");
+    fenetre.appendChild(bla);
+    bla.src = "sounds/bla.ogg";
+    bla.id = "bla";
+    bla = document.getElementById("bla");
+    bla.loop = false;
+    bla.play();
+}
+function playbottom() {
+    var bottom = document.createElement("audio");
+    fenetre.appendChild(bottom);
+    bottom.src = "sounds/bottom.ogg";
+    bottom.id = "bottom";
+    bottom = document.getElementById("bottom");
+    bottom.loop = false;
+    bottom.play();
+}
+function playtir() {
+    var tir = document.createElement("audio");
+    fenetre.appendChild(tir);
+    tir.src = "sounds/tir.ogg";
+    tir.id = "tir";
+    tir = document.getElementById("tir");
+    tir.loop = false;
+    tir.play();
+}
+function playohnon() {
+    var ohnon = document.createElement("audio");
+    fenetre.appendChild(ohnon);
+    ohnon.src = "sounds/ohnon.ogg";
+    ohnon.id = "ohnon";
+    ohnon = document.getElementById("ohnon");
+    ohnon.loop = false;
+    ohnon.play();
+}
+function playohlala() {
+    var ohlala = document.createElement("audio");
+    fenetre.appendChild(ohlala);
+    ohlala.src = "sounds/ohlala.ogg";
+    ohlala.id = "ohlala";
+    ohlala = document.getElementById("ohlala");
+    ohlala.loop = false;
+    ohlala.play();
 }
 
 /*******************JOUER********************/
@@ -134,7 +179,7 @@ let quelMinion;
 
 document.addEventListener('keydown', function (event) {
     if (event.keyCode == "32" && hasFired == 0) {
-        playSound("pou.ogg");
+        playpou();
         projectiles[0].style.display = "block";
         hasFired = 1;
         quelMinion = Math.random() < 0.5 ? 5 : 32;
@@ -164,6 +209,7 @@ document.addEventListener('keydown', function (event) {
                     if (parseInt(projectiles[0].style.bottom) <= realAlienBottom && parseInt(projectiles[0].style.bottom) >= realAlienBottom - 30) {
                         if (parseInt(projectiles[0].style.left) + 5 >= realAlienLeft && parseInt(projectiles[0].style.left) <= realAlienLeft + 25) {
                             mechants.removeChild(thisAlien);
+                            playbla();
                             projectiles[0].style.display = "none";
                             projectiles[0].style.bottom = "75px";
                             clearInterval(monTimer);
@@ -188,7 +234,7 @@ var monTimerMissile;
 
 function tirAliens() {
     monTimerMissileAliens = setInterval(function () {
-
+        playtir();
         function entierAleatoire(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
@@ -292,7 +338,7 @@ var interLost = setInterval(function () {
         fenetre.appendChild(perdu);
         perdu.innerHTML = "(thisAlien.style.bottom == 0) is true ; YOU HAVE LOST.";
         perdu.id = "perdu"
-        playSound("bottom.ogg");
+        playbottom();
         clearInterval(interLost);
         clearInterval(monTimerMissileAliens);
     }
