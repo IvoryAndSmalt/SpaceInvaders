@@ -127,3 +127,19 @@ h1{
     text-transform: initial;
     color: red;
 }
+
+.carres{
+    position: absolute;
+    background: green;
+    height: 10px;
+    width: 10px;
+    border: none;
+}
+
+.carresbas{
+    bottom: 90px;
+}
+
+.carresHaut{
+    bottom: 100px;
+}

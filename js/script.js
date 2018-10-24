@@ -15,6 +15,28 @@ var monTimer;
 var messageBravo = document.createElement("h1");
 var perdu = document.createElement("h1");
 
+/************************GENERATION OBSTACLES**********/
+
+var nombreObst = 4;
+var nombreHaut = 4;
+var margeHaut = 10;
+var valeurObst = 140;
+
+for (let i = 0; i < nombreObst; i++) {
+    console.log("i");
+    console.log(i);
+    for (let j = 0; j < nombreHaut; j++) {
+        console.log("j");
+        console.log(j);
+        let carresHaut = document.createElement("div");
+        carresHaut.className = 'carresHaut carres';
+        carresHaut.style.left = margeHaut * j + i * valeurObst +"px";
+        fenetre.appendChild(carresHaut);
+        console.log(carresHaut.style.left);
+    }
+}
+
+
 /****************FONCTION JOUER DES SONS***************/
 function playSound(audio) {
     var myAudio = document.createElement("audio");
