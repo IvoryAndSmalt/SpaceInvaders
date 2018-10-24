@@ -4,6 +4,7 @@ var projectiles = document.getElementsByClassName('projectiles');
 var fenetre = document.getElementById('container');
 jouer.style.display = "block";
 vaisseau.style.left = "375px";
+vaisseau.style.bottom="25px";
 vaisseau.style.display = "none";
 projectiles[0].style.bottom = "75px";
 projectiles[0].style.left = "398px";
@@ -13,6 +14,28 @@ var alienJump = 50;
 var monTimer;
 var messageBravo = document.createElement("h1");
 var perdu = document.createElement("h1");
+
+/************************GENERATION OBSTACLES**********/
+
+var nombreObst = 4;
+var nombreHaut = 4;
+var margeHaut = 10;
+var valeurObst = 140;
+
+for (let i = 0; i < nombreObst; i++) {
+    console.log("i");
+    console.log(i);
+    for (let j = 0; j < nombreHaut; j++) {
+        console.log("j");
+        console.log(j);
+        let carresHaut = document.createElement("div");
+        carresHaut.className = 'carresHaut carres';
+        carresHaut.style.left = margeHaut * j + i * valeurObst +"px";
+        fenetre.appendChild(carresHaut);
+        console.log(carresHaut.style.left);
+    }
+}
+
 
 /****************FONCTION JOUER DES SONS***************/
 function playSound(audio) {
@@ -189,7 +212,7 @@ function tirAliens() {
         //générer un aléatoire entre 1 et 10
 
         missileAliensLeft = entier * multiple + parseInt(mechants.style.left) + 15 + "px";
-        missileAliens.style.bottom = "210px";
+        missileAliens.style.bottom = parseInt(mechants.style.bottom)-180+"px";
         missileAliens.style.left = missileAliensLeft;
         missileAliens.style.display = "none";
 
@@ -201,38 +224,57 @@ function tirAliens() {
             else {
                 missileAliens.style.display = "block";
                 missileAliens.style.bottom = parseFloat(missileAliens.style.bottom) - 12 + "px";
+                console.log(missileAliens.style.bottom);
+                console.log(vaisseau.style.bottom);
+                
+                if (parseInt(missileAliens.style.bottom)-30 <= parseInt(vaisseau.style.bottom) && parseInt(missileAliens.style.bottom)-30 >= parseInt(vaisseau.style.bottom) - 50) {
+                    if (parseInt(missileAliens.style.left) >= parseInt(vaisseau.style.left) && parseInt(missileAliens.style.left) <= parseInt(vaisseau.style.left) + 50) {
+                    console.log("true");    
+                    vaisseau.style.display="none";
+                        missileAliens.style.display = "none";
+                        clearInterval(monTimerMissileAliens);
+                        clearInterval(moveAliensGauche);
+                        mechants.style.display="none";
+                        // AFFICHER UN MESSAAAAAAGE
+                     
+                        
+                    }
+                }
             }
         }, 100);
 
     }, 2500);
 }
 
-/*******************PERDRE********************/
-var hasLost = 0;
-function perdre() {
-    for (var i = 0; i < aliens.length; i++) {
-        var thisAlien = aliens[i];
-        var realAlienBottom = parseInt(thisAlien.style.bottom) + parseInt(mechants.style.bottom);
-        if (realAlienBottom <= 75) {
-            hasLost = 1;
-        }
-    }
-}
 
-var interLost = setInterval(function () {
-    perdre();
-    if (hasLost == 1) {
-        vaisseau.style.display = "none";
-        projectiles[0].style.display = "none";
-        mechants.style.display = "none";
-        fenetre.appendChild(perdu);
-        perdu.innerHTML = "(thisAlien.style.bottom == 0) is true ; YOU HAVE LOST.";
-        perdu.id = "perdu"
-        playSound("bottom.ogg");
-        clearInterval(interLost);
-        clearInterval(monTimerMissileAliens);
-    }
-}, alienMoveSpeed);
+
+
+        /*******************PERDRE********************/
+        var hasLost = 0;
+        function perdre() {
+            for (var i = 0; i < aliens.length; i++) {
+                var thisAlien = aliens[i];
+                var realAlienBottom = parseInt(thisAlien.style.bottom) + parseInt(mechants.style.bottom);
+                if (realAlienBottom <= 75) {
+                    hasLost = 1;
+                }
+            }
+        }
+
+        var interLost = setInterval(function () {
+            perdre();
+            if (hasLost == 1) {
+                vaisseau.style.display = "none";
+                projectiles[0].style.display = "none";
+                mechants.style.display = "none";
+                fenetre.appendChild(perdu);
+                perdu.innerHTML = "(thisAlien.style.bottom == 0) is true ; YOU HAVE LOST.";
+                perdu.id = "perdu"
+                playSound("bottom.ogg");
+                clearInterval(interLost);
+                clearInterval(monTimerMissileAliens);
+            }
+        }, alienMoveSpeed);
 
 
 
