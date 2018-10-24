@@ -6,6 +6,7 @@ var alienMoveSpeed = 750;
 var alienJump = 30;
 var monTimer;
 var messageBravo = document.createElement("h1");
+var messageMort = document.createElement("h1");
 var perdu = document.createElement("h1");
 var score = 0;
 var vie = 3;
@@ -133,6 +134,7 @@ let quelMinion;
 
 document.addEventListener('keydown', function (event) {
     if (event.keyCode == "32" && hasFired == 0) {
+        playSound("pou.ogg");
         projectiles[0].style.display = "block";
         hasFired = 1;
         quelMinion = Math.random() < 0.5 ? 5 : 32;
@@ -213,7 +215,6 @@ function tirAliens() {
                 if (parseInt(missileAliens.style.bottom) - 30 <= parseInt(vaisseau.style.bottom) && parseInt(missileAliens.style.bottom) - 30 >= parseInt(vaisseau.style.bottom) - 50) {
                     if (parseInt(missileAliens.style.left) >= parseInt(vaisseau.style.left) && parseInt(missileAliens.style.left) <= parseInt(vaisseau.style.left) + 50) {
 
-                        // AFFICHER UN MESSAAAAAAGE
                         if (vie > 0) {
                             vie = vie - 1;
                             missileAliens.style.display = "none";
@@ -227,6 +228,10 @@ function tirAliens() {
                             clearInterval(moveAliensGauche);
                             mechants.style.display = "none";
                             document.getElementById("vie").innerHTML = "Vies : " + vie;
+                            fenetre.appendChild(messageMort);
+                            messageMort.innerHTML = "YOU DIED";
+                            messageMort.id = "youdied"
+                            // AFFICHER UN MESSAAAAAAGE
                         }
                     }
                 }
@@ -292,7 +297,7 @@ var interLost = setInterval(function () {
         clearInterval(monTimerMissileAliens);
     }
 }, alienMoveSpeed);
-    
+
 
 document.addEventListener("keydown", function (e) {
     if (e.keyCode == "90") {
