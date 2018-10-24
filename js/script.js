@@ -258,7 +258,7 @@ function tirAliens() {
             }
         }, 100);
 
-    }, 2500);
+    }, 3000);
 }
 
 
@@ -291,7 +291,7 @@ var interLost = setInterval(function () {
         clearInterval(monTimerMissileAliens);
     }
 }, alienMoveSpeed);
-
+    
 
 
 
