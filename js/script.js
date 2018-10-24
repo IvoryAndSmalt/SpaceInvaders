@@ -86,7 +86,7 @@ jouer.addEventListener("click", function () {
     vaisseau.style.display = "block";
     mechants.style.display = "block";
     lesAliensBougent();
-    fenetre.style.background = "none";
+    // fenetre.style.background = "none";
 });
 
 /**************ALLER A GAUCHE ***************/
