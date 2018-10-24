@@ -56,7 +56,7 @@ table {
     width: 800px;
     height: 550px;
     border: solid 3px blue;
-    background: url(../images/minionaccueil.jpg);
+    background: url(../images/fondjeux.png);
 }
 
 #jouer {
@@ -150,4 +150,30 @@ h1{
 
 .carresHaut{
     bottom: 100px;
+}
+
+a  {
+    /*text-align: center;*/
+   display: block;
+    width: 130px;
+    height: 30px;
+    margin: 0 auto;
+    border: double;
+    border-radius: 25%;
+    border-style: solid;
+    padding: 1em 1em 1em 1em;
+    border-color: #fff;
+    background-color:#fef167; 
+    font-family: 'Roboto', sans-serif;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 600;
+    font-size: 30px;
+    color:#5baecc;
+ 
+}
+
+#jouer {
+    background-color:#fef167;
+    color:#5baecc;
 }
