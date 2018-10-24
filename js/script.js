@@ -11,6 +11,8 @@ var perdu = document.createElement("h1");
 var score = 0;
 var vie = 3;
 
+
+
 document.getElementById("score").innerHTML = "Score : " + score;
 document.getElementById("vie").innerHTML = "Vies : " + vie;
 jouer.style.display = "block";
@@ -86,7 +88,7 @@ jouer.addEventListener("click", function () {
     vaisseau.style.display = "block";
     mechants.style.display = "block";
     lesAliensBougent();
-    fenetre.style.background = "none";
+    fenetre.style.backgroundImage = "none";
 });
 
 /**************ALLER A GAUCHE ***************/
@@ -115,6 +117,38 @@ document.addEventListener('keydown', function (event) {
         moveRight();
     }
 });
+
+var nombreObst = 4;
+var nombreHaut = 4;
+var margeHaut = 10;
+var valeurObst = 140;
+
+for (let i = 0; i < nombreObst; i++) {
+    for (let j = 0; j < nombreHaut; j++) {
+        let carresHaut = document.createElement("div");
+        carresHaut.className = 'carresHaut carres';
+        carresHaut.style.left = 170 + margeHaut * j + i * valeurObst + "px";
+        carresHaut.style.bottom = "100px"
+        fenetre.appendChild(carresHaut);
+    }
+}
+
+let carresHaut = document.getElementsByClassName("carresHaut");
+
+
+// if (parseInt(projectiles[0].style.bottom) <= parseInt(carresHaut) && parseInt(projectiles[0].style.bottom) >= parseInt(carresHaut - 30)) {
+//     if (parseInt(projectiles[0].style.left) + 5 >= parseInt(carresHaut.style.left) && parseInt(projectiles[0].style.left) <= parseInt(carresHaut.style.left) + 25) {
+//         mechants.removeChild(thisAlien);
+//         playbla();
+//         projectiles[0].style.display = "none";
+//         projectiles[0].style.bottom = "75px";
+//         clearInterval(monTimer);
+//         hasFired = 0;
+//         score = score + 100;
+//         document.getElementById("score").innerHTML = "Score : " + score;
+//     }
+// }
+
 
 /**********************ORGANISATION ALIENS*********************/
 
@@ -190,6 +224,7 @@ document.addEventListener('keydown', function (event) {
             }
 
             else if (parseInt(projectiles[0].style.bottom) >= 500) {
+                
                 hasFired = 0;
                 clearInterval(monTimer);
                 projectiles[0].style.bottom = 66 + "px";
@@ -198,7 +233,17 @@ document.addEventListener('keydown', function (event) {
             else {
                 projectiles[0].style.display = "block";
                 projectiles[0].style.bottom = parseFloat(projectiles[0].style.bottom) + 16 + "px";
-                if (parseInt(projectiles[0].style.bottom)) {
+                for (let i = 0; i < carresHaut.length; i++) {
+                    console.log(carresHaut[i].style.bottom);
+                    if (parseInt(projectiles[0].style.bottom) <= parseInt(carresHaut[i].style.bottom) && parseInt(projectiles[0].style.bottom) >= parseInt(carresHaut[i].style.bottom) - 10) {
+                        if (parseInt(projectiles[0].style.left) >= parseInt(carresHaut[i].style.left) && parseInt(projectiles[0].style.left) <= parseInt(carresHaut[i].style.left) + 10) {
+                            fenetre.removeChild(carresHaut[i]);
+                            clearInterval(monTimer);
+                            projectiles[0].style.display="none";
+                            projectiles[0].style.bottom = "75px";
+                            hasFired=0;
+                        }
+                    }
                 }
                 /***********COLLISION TIRS AVEC LES ALIENS *********************/
                 for (var i = 0; i < aliens.length; i++) {
@@ -249,11 +294,31 @@ function tirAliens() {
         missileAliens.style.display = "none";
 
         let vitesseMissileAliens = setInterval(function () {
+
+
+
             if (parseInt(missileAliens.style.bottom) <= 20) {
                 clearInterval(vitesseMissileAliens);
                 missileAliens.style.display = "none";
+
             }
+
             else {
+                // for (let i = 0; i < carresHaut.length; i++) {
+                //     console.log(carresHaut[i].style.bottom);
+                //     if (parseInt(missileAliens.style.bottom) - 20 <= parseInt(carresHaut[i].style.bottom) && parseInt(missileAliens.style.bottom) - 20 >= parseInt(carresHaut[i].style.bottom) - 10) {
+                //         if (parseInt(missileAliens.style.left) >= parseInt(carresHaut[i].style.left) && parseInt(missileAliens.style.left) <= parseInt(carresHaut[i].style.left) + 10) {
+                            
+                //             fenetre.removeChild(carresHaut[i]);
+                //             clearInterval(monTimerMissileAliens);
+                //             missileAliens.style.display="none";
+                //             missileAliens.style.bottom = "-100px";
+                //             clearInterval(vitesseMissileAliens)
+
+                //         }
+                //     }
+                // }
+            
                 missileAliens.style.display = "block";
                 missileAliens.style.bottom = parseFloat(missileAliens.style.bottom) - 12 + "px";
 
@@ -284,22 +349,6 @@ function tirAliens() {
             }
         }, 100);
     }, 3000);
-}
-
-/************************GENERATION OBSTACLES**********/
-
-var nombreObst = 4;
-var nombreHaut = 4;
-var margeHaut = 10;
-var valeurObst = 140;
-
-for (let i = 0; i < nombreObst; i++) {
-    for (let j = 0; j < nombreHaut; j++) {
-        let carresHaut = document.createElement("div");
-        carresHaut.className = 'carresHaut carres';
-        carresHaut.style.left = margeHaut * j + i * valeurObst + "px";
-        fenetre.appendChild(carresHaut);
-    }
 }
 
 /**************************GAGNER**********************/
