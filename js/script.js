@@ -10,6 +10,8 @@ var perdu = document.createElement("h1");
 var score = 0;
 var vie = 3;
 
+document.getElementById("score").innerHTML = "Score : " + score;
+document.getElementById("vie").innerHTML = "Vies : " + vie;
 jouer.style.display = "block";
 vaisseau.style.left = "375px";
 vaisseau.style.bottom = "25px";
@@ -241,9 +243,7 @@ var margeHaut = 10;
 var valeurObst = 140;
 
 for (let i = 0; i < nombreObst; i++) {
-
     for (let j = 0; j < nombreHaut; j++) {
-
         let carresHaut = document.createElement("div");
         carresHaut.className = 'carresHaut carres';
         carresHaut.style.left = margeHaut * j + i * valeurObst + "px";
