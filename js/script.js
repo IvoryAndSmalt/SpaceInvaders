@@ -6,10 +6,13 @@ var alienMoveSpeed = 750;
 var alienJump = 30;
 var monTimer;
 var messageBravo = document.createElement("h1");
+var messageMort = document.createElement("h1");
 var perdu = document.createElement("h1");
 var score = 0;
 var vie = 3;
 
+document.getElementById("score").innerHTML = "Score : " + score;
+document.getElementById("vie").innerHTML = "Vies : " + vie;
 jouer.style.display = "block";
 vaisseau.style.left = "375px";
 vaisseau.style.bottom = "25px";
@@ -18,35 +21,60 @@ projectiles[0].style.bottom = "75px";
 projectiles[0].style.left = "398px";
 projectiles[0].style.display = "none";
 
-/************************GENERATION OBSTACLES**********/
-
-var nombreObst = 4;
-var nombreHaut = 4;
-var margeHaut = 10;
-var valeurObst = 140;
-
-for (let i = 0; i < nombreObst; i++) {
-
-    for (let j = 0; j < nombreHaut; j++) {
-
-        let carresHaut = document.createElement("div");
-        carresHaut.className = 'carresHaut carres';
-        carresHaut.style.left = margeHaut * j + i * valeurObst + "px";
-        fenetre.appendChild(carresHaut);
-
-    }
-}
-
-
 /****************FONCTION JOUER DES SONS***************/
-function playSound(audio) {
-    var myAudio = document.createElement("audio");
-    fenetre.appendChild(myAudio);
-    myAudio.src = "sounds/" + audio;
-    myAudio.id = "myAudio";
-    myAudio = document.getElementById("myAudio");
-    myAudio.loop = false;
-    myAudio.play();
+function playpou() {
+    var pou = document.createElement("audio");
+    fenetre.appendChild(pou);
+    pou.src = "sounds/pou.ogg";
+    pou.id = "pou";
+    pou = document.getElementById("pou");
+    pou.loop = false;
+    pou.play();
+}
+function playbla() {
+    var bla = document.createElement("audio");
+    fenetre.appendChild(bla);
+    bla.src = "sounds/bla.ogg";
+    bla.id = "bla";
+    bla = document.getElementById("bla");
+    bla.loop = false;
+    bla.play();
+}
+function playbottom() {
+    var bottom = document.createElement("audio");
+    fenetre.appendChild(bottom);
+    bottom.src = "sounds/bottom.ogg";
+    bottom.id = "bottom";
+    bottom = document.getElementById("bottom");
+    bottom.loop = false;
+    bottom.play();
+}
+function playtir() {
+    var tir = document.createElement("audio");
+    fenetre.appendChild(tir);
+    tir.src = "sounds/tir.ogg";
+    tir.id = "tir";
+    tir = document.getElementById("tir");
+    tir.loop = false;
+    tir.play();
+}
+function playohnon() {
+    var ohnon = document.createElement("audio");
+    fenetre.appendChild(ohnon);
+    ohnon.src = "sounds/ohnon.ogg";
+    ohnon.id = "ohnon";
+    ohnon = document.getElementById("ohnon");
+    ohnon.loop = false;
+    ohnon.play();
+}
+function playohlala() {
+    var ohlala = document.createElement("audio");
+    fenetre.appendChild(ohlala);
+    ohlala.src = "sounds/ohlala.ogg";
+    ohlala.id = "ohlala";
+    ohlala = document.getElementById("ohlala");
+    ohlala.loop = false;
+    ohlala.play();
 }
 
 /*******************JOUER********************/
@@ -151,18 +179,14 @@ let quelMinion;
 
 document.addEventListener('keydown', function (event) {
     if (event.keyCode == "32" && hasFired == 0) {
+        playpou();
         projectiles[0].style.display = "block";
         hasFired = 1;
         quelMinion = Math.random() < 0.5 ? 5 : 32;
         projectiles[0].style.left = parseFloat(vaisseau.style.left) + quelMinion + "px";
         monTimer = setInterval(function () {
             if (aliens.length == 0) {
-                clearInterval(monTimer);
-                mechants.style.display = "none";
-                fenetre.appendChild(messageBravo);
-                messageBravo.innerHTML = "Bravo, vous avez gagné !";
-                messageBravo.id = "bravomessage"
-                //ajout audio victoire
+                gagner();
             }
 
             else if (parseInt(projectiles[0].style.bottom) >= 500) {
@@ -174,14 +198,18 @@ document.addEventListener('keydown', function (event) {
             else {
                 projectiles[0].style.display = "block";
                 projectiles[0].style.bottom = parseFloat(projectiles[0].style.bottom) + 16 + "px";
+
+                if (parseInt(projectiles[0].style.bottom)) {
+                }
+                /***********COLLISION TIRS AVEC LES ALIENS *********************/
                 for (var i = 0; i < aliens.length; i++) {
                     var thisAlien = aliens[i];
                     var realAlienBottom = parseInt(thisAlien.style.bottom) + parseInt(mechants.style.bottom);
                     var realAlienLeft = parseInt(thisAlien.style.left) + parseInt(mechants.style.left);
-
                     if (parseInt(projectiles[0].style.bottom) <= realAlienBottom && parseInt(projectiles[0].style.bottom) >= realAlienBottom - 30) {
                         if (parseInt(projectiles[0].style.left) + 5 >= realAlienLeft && parseInt(projectiles[0].style.left) <= realAlienLeft + 25) {
                             mechants.removeChild(thisAlien);
+                            playbla();
                             projectiles[0].style.display = "none";
                             projectiles[0].style.bottom = "75px";
                             clearInterval(monTimer);
@@ -206,7 +234,7 @@ var monTimerMissile;
 
 function tirAliens() {
     monTimerMissileAliens = setInterval(function () {
-
+        playtir();
         function entierAleatoire(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
@@ -233,14 +261,12 @@ function tirAliens() {
                 if (parseInt(missileAliens.style.bottom) - 30 <= parseInt(vaisseau.style.bottom) && parseInt(missileAliens.style.bottom) - 30 >= parseInt(vaisseau.style.bottom) - 50) {
                     if (parseInt(missileAliens.style.left) >= parseInt(vaisseau.style.left) && parseInt(missileAliens.style.left) <= parseInt(vaisseau.style.left) + 50) {
 
-                        // AFFICHER UN MESSAAAAAAGE
                         if (vie > 0) {
                             vie = vie - 1;
                             missileAliens.style.display = "none";
                             clearInterval(vitesseMissileAliens)
                             document.getElementById("vie").innerHTML = "Vies : " + vie;
                         }
-
                         else {
                             vaisseau.style.display = "none";
                             missileAliens.style.display = "none";
@@ -248,22 +274,46 @@ function tirAliens() {
                             clearInterval(moveAliensGauche);
                             mechants.style.display = "none";
                             document.getElementById("vie").innerHTML = "Vies : " + vie;
-
+                            fenetre.appendChild(messageMort);
+                            messageMort.innerHTML = "YOU DIED";
+                            messageMort.id = "youdied"
+                            // AFFICHER UN MESSAAAAAAGE
                         }
-
-
-
                     }
                 }
             }
         }, 100);
-
-    }, 2500);
+    }, 3000);
 }
 
+/************************GENERATION OBSTACLES**********/
 
+var nombreObst = 4;
+var nombreHaut = 4;
+var margeHaut = 10;
+var valeurObst = 140;
 
+for (let i = 0; i < nombreObst; i++) {
+    for (let j = 0; j < nombreHaut; j++) {
+        let carresHaut = document.createElement("div");
+        carresHaut.className = 'carresHaut carres';
+        carresHaut.style.left = margeHaut * j + i * valeurObst + "px";
+        fenetre.appendChild(carresHaut);
+    }
+}
 
+/**************************GAGNER**********************/
+
+function gagner() {
+    clearInterval(monTimer);
+    mechants.style.display = "none";
+    projectiles[0].style.display = "none";
+    clearInterval(monTimerMissileAliens);
+    fenetre.appendChild(messageBravo);
+    messageBravo.innerHTML = "Bravo, vous avez gagné !";
+    messageBravo.id = "bravomessage"
+    //ajout audio victoire
+}
 
 /*******************PERDRE********************/
 var hasLost = 0;
@@ -277,6 +327,8 @@ function perdre() {
     }
 }
 
+/***************APPEL à chaque fois que les aliens bougent*************/
+
 var interLost = setInterval(function () {
     perdre();
     if (hasLost == 1) {
@@ -286,21 +338,18 @@ var interLost = setInterval(function () {
         fenetre.appendChild(perdu);
         perdu.innerHTML = "(thisAlien.style.bottom == 0) is true ; YOU HAVE LOST.";
         perdu.id = "perdu"
-        playSound("bottom.ogg");
+        playbottom();
         clearInterval(interLost);
         clearInterval(monTimerMissileAliens);
     }
 }, alienMoveSpeed);
 
 
-
-
-
-
-
-
-
-
+document.addEventListener("keydown", function (e) {
+    if (e.keyCode == "90") {
+        gagner();
+    }
+});
 
 
 

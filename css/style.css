@@ -131,7 +131,7 @@ h1{
     color: green;
 }
 
-#perdu{
+#perdu, #youdied{
     text-transform: initial;
     color: red;
 }
