@@ -2,8 +2,8 @@ var vaisseau = document.getElementById('vaisseau');
 var jouer = document.getElementById('jouer');
 var projectiles = document.getElementsByClassName('projectiles');
 var fenetre = document.getElementById('container');
-var alienMoveSpeed = 750;
-var alienJump = 30;
+var alienMoveSpeed = 400;
+var alienJump = 20;
 var monTimer;
 var messageBravo = document.createElement("h1");
 var messageMort = document.createElement("h1");
@@ -198,7 +198,6 @@ document.addEventListener('keydown', function (event) {
             else {
                 projectiles[0].style.display = "block";
                 projectiles[0].style.bottom = parseFloat(projectiles[0].style.bottom) + 16 + "px";
-
                 if (parseInt(projectiles[0].style.bottom)) {
                 }
                 /***********COLLISION TIRS AVEC LES ALIENS *********************/
@@ -260,14 +259,16 @@ function tirAliens() {
 
                 if (parseInt(missileAliens.style.bottom) - 30 <= parseInt(vaisseau.style.bottom) && parseInt(missileAliens.style.bottom) - 30 >= parseInt(vaisseau.style.bottom) - 50) {
                     if (parseInt(missileAliens.style.left) >= parseInt(vaisseau.style.left) && parseInt(missileAliens.style.left) <= parseInt(vaisseau.style.left) + 50) {
-
                         if (vie > 0) {
+                            playohlala();
                             vie = vie - 1;
                             missileAliens.style.display = "none";
                             clearInterval(vitesseMissileAliens)
                             document.getElementById("vie").innerHTML = "Vies : " + vie;
                         }
                         else {
+                            perdre();
+                            playohnon();
                             vaisseau.style.display = "none";
                             missileAliens.style.display = "none";
                             clearInterval(monTimerMissileAliens);
@@ -276,8 +277,7 @@ function tirAliens() {
                             document.getElementById("vie").innerHTML = "Vies : " + vie;
                             fenetre.appendChild(messageMort);
                             messageMort.innerHTML = "YOU DIED";
-                            messageMort.id = "youdied"
-                            // AFFICHER UN MESSAAAAAAGE
+                            messageMort.id = "youdied";
                         }
                     }
                 }
@@ -323,6 +323,7 @@ function perdre() {
         var realAlienBottom = parseInt(thisAlien.style.bottom) + parseInt(mechants.style.bottom);
         if (realAlienBottom <= 75) {
             hasLost = 1;
+            playbottom();
         }
     }
 }
@@ -338,7 +339,6 @@ var interLost = setInterval(function () {
         fenetre.appendChild(perdu);
         perdu.innerHTML = "(thisAlien.style.bottom == 0) is true ; YOU HAVE LOST.";
         perdu.id = "perdu"
-        playbottom();
         clearInterval(interLost);
         clearInterval(monTimerMissileAliens);
     }
