@@ -2,13 +2,6 @@ var vaisseau = document.getElementById('vaisseau');
 var jouer = document.getElementById('jouer');
 var projectiles = document.getElementsByClassName('projectiles');
 var fenetre = document.getElementById('container');
-jouer.style.display = "block";
-vaisseau.style.left = "375px";
-vaisseau.style.bottom="25px";
-vaisseau.style.display = "none";
-projectiles[0].style.bottom = "75px";
-projectiles[0].style.left = "398px";
-projectiles[0].style.display = "none";
 var alienMoveSpeed = 750;
 var alienJump = 30;
 var monTimer;
@@ -16,6 +9,14 @@ var messageBravo = document.createElement("h1");
 var perdu = document.createElement("h1");
 var score = 0;
 var vie = 3;
+
+jouer.style.display = "block";
+vaisseau.style.left = "375px";
+vaisseau.style.bottom = "25px";
+vaisseau.style.display = "none";
+projectiles[0].style.bottom = "75px";
+projectiles[0].style.left = "398px";
+projectiles[0].style.display = "none";
 
 /************************GENERATION OBSTACLES**********/
 
@@ -25,16 +26,14 @@ var margeHaut = 10;
 var valeurObst = 140;
 
 for (let i = 0; i < nombreObst; i++) {
-    console.log("i");
-    console.log(i);
+
     for (let j = 0; j < nombreHaut; j++) {
-        console.log("j");
-        console.log(j);
+
         let carresHaut = document.createElement("div");
         carresHaut.className = 'carresHaut carres';
-        carresHaut.style.left = margeHaut * j + i * valeurObst +"px";
+        carresHaut.style.left = margeHaut * j + i * valeurObst + "px";
         fenetre.appendChild(carresHaut);
-        console.log(carresHaut.style.left);
+
     }
 }
 
@@ -143,8 +142,7 @@ function lesAliensBougent() {
 
 /********************TIRE***********************/
 
-var hasFired;
-hasFired = 0;
+var hasFired = 0;
 projectiles[0].style.bottom = "75px";
 projectiles[0].style.left = "400px";
 projectiles[0].style.display = "none";
@@ -152,10 +150,10 @@ let aliens = document.getElementsByClassName('aliens');
 let quelMinion;
 
 document.addEventListener('keydown', function (event) {
-
     if (event.keyCode == "32" && hasFired == 0) {
-        quelMinion = Math.random() < 0.5 ? 5 : 32;
+        projectiles[0].style.display = "block";
         hasFired = 1;
+        quelMinion = Math.random() < 0.5 ? 5 : 32;
         projectiles[0].style.left = parseFloat(vaisseau.style.left) + quelMinion + "px";
         monTimer = setInterval(function () {
             if (aliens.length == 0) {
@@ -180,18 +178,16 @@ document.addEventListener('keydown', function (event) {
                     var thisAlien = aliens[i];
                     var realAlienBottom = parseInt(thisAlien.style.bottom) + parseInt(mechants.style.bottom);
                     var realAlienLeft = parseInt(thisAlien.style.left) + parseInt(mechants.style.left);
-                    
+
                     if (parseInt(projectiles[0].style.bottom) <= realAlienBottom && parseInt(projectiles[0].style.bottom) >= realAlienBottom - 30) {
-                        if (parseInt(projectiles[0].style.left) >= realAlienLeft && parseInt(projectiles[0].style.left) <= realAlienLeft + 30) {
+                        if (parseInt(projectiles[0].style.left) + 5 >= realAlienLeft && parseInt(projectiles[0].style.left) <= realAlienLeft + 25) {
                             mechants.removeChild(thisAlien);
                             projectiles[0].style.display = "none";
-                            // clearInterval(monTimer);
-
-                            score = score +100 ;
-                            document.getElementById("score").innerHTML = "Score : "+ score;
-
-
-                            
+                            projectiles[0].style.bottom = "75px";
+                            clearInterval(monTimer);
+                            hasFired = 0;
+                            score = score + 100;
+                            document.getElementById("score").innerHTML = "Score : " + score;
                         }
                     }
                 }
@@ -199,9 +195,6 @@ document.addEventListener('keydown', function (event) {
         }, 40);
     }
 });
-
-
-
 
 /**********************ALIENS TIRENT*****************/
 
@@ -224,7 +217,7 @@ function tirAliens() {
         //générer un aléatoire entre 1 et 10
 
         missileAliensLeft = entier * multiple + parseInt(mechants.style.left) + 15 + "px";
-        missileAliens.style.bottom = parseInt(mechants.style.bottom)-180+"px";
+        missileAliens.style.bottom = parseInt(mechants.style.bottom) - 180 + "px";
         missileAliens.style.left = missileAliensLeft;
         missileAliens.style.display = "none";
 
@@ -236,39 +229,35 @@ function tirAliens() {
             else {
                 missileAliens.style.display = "block";
                 missileAliens.style.bottom = parseFloat(missileAliens.style.bottom) - 12 + "px";
-                console.log(missileAliens.style.bottom);
-                console.log(vaisseau.style.bottom);
-                
-                if (parseInt(missileAliens.style.bottom)-30 <= parseInt(vaisseau.style.bottom) && parseInt(missileAliens.style.bottom)-30 >= parseInt(vaisseau.style.bottom) - 50) {
+
+                if (parseInt(missileAliens.style.bottom) - 30 <= parseInt(vaisseau.style.bottom) && parseInt(missileAliens.style.bottom) - 30 >= parseInt(vaisseau.style.bottom) - 50) {
                     if (parseInt(missileAliens.style.left) >= parseInt(vaisseau.style.left) && parseInt(missileAliens.style.left) <= parseInt(vaisseau.style.left) + 50) {
-                    console.log("true");    
-                   
+
                         // AFFICHER UN MESSAAAAAAGE
-                        if (vie>0){
-                         vie = vie -1 ;
-                         missileAliens.style.display = "none";
-                         clearInterval(vitesseMissileAliens)
-                         document.getElementById("vie").innerHTML ="Vies : " + vie ;
+                        if (vie > 0) {
+                            vie = vie - 1;
+                            missileAliens.style.display = "none";
+                            clearInterval(vitesseMissileAliens)
+                            document.getElementById("vie").innerHTML = "Vies : " + vie;
                         }
 
-                         else{
-                            vaisseau.style.display="none";
+                        else {
+                            vaisseau.style.display = "none";
                             missileAliens.style.display = "none";
                             clearInterval(monTimerMissileAliens);
                             clearInterval(moveAliensGauche);
-                            mechants.style.display="none";
-                            console.log(vie);
-                            document.getElementById("vie").innerHTML ="Vies : " + vie ;
+                            mechants.style.display = "none";
+                            document.getElementById("vie").innerHTML = "Vies : " + vie;
 
                         }
-                        
-                        
-                        
+
+
+
                     }
                 }
             }
         }, 100);
-        
+
     }, 2500);
 }
 
@@ -276,32 +265,32 @@ function tirAliens() {
 
 
 
-        /*******************PERDRE********************/
-        var hasLost = 0;
-        function perdre() {
-            for (var i = 0; i < aliens.length; i++) {
-                var thisAlien = aliens[i];
-                var realAlienBottom = parseInt(thisAlien.style.bottom) + parseInt(mechants.style.bottom);
-                if (realAlienBottom <= 75) {
-                    hasLost = 1;
-                }
-            }
+/*******************PERDRE********************/
+var hasLost = 0;
+function perdre() {
+    for (var i = 0; i < aliens.length; i++) {
+        var thisAlien = aliens[i];
+        var realAlienBottom = parseInt(thisAlien.style.bottom) + parseInt(mechants.style.bottom);
+        if (realAlienBottom <= 75) {
+            hasLost = 1;
         }
+    }
+}
 
-        var interLost = setInterval(function () {
-            perdre();
-            if (hasLost == 1) {
-                vaisseau.style.display = "none";
-                projectiles[0].style.display = "none";
-                mechants.style.display = "none";
-                fenetre.appendChild(perdu);
-                perdu.innerHTML = "(thisAlien.style.bottom == 0) is true ; YOU HAVE LOST.";
-                perdu.id = "perdu"
-                playSound("bottom.ogg");
-                clearInterval(interLost);
-                clearInterval(monTimerMissileAliens);
-            }
-        }, alienMoveSpeed);
+var interLost = setInterval(function () {
+    perdre();
+    if (hasLost == 1) {
+        vaisseau.style.display = "none";
+        projectiles[0].style.display = "none";
+        mechants.style.display = "none";
+        fenetre.appendChild(perdu);
+        perdu.innerHTML = "(thisAlien.style.bottom == 0) is true ; YOU HAVE LOST.";
+        perdu.id = "perdu"
+        playSound("bottom.ogg");
+        clearInterval(interLost);
+        clearInterval(monTimerMissileAliens);
+    }
+}, alienMoveSpeed);
 
 
 
